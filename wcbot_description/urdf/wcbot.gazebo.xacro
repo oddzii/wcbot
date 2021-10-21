@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+
+<robot name="wcbot_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>30</updateRate>
+      <leftJoint>joint_main_L</leftJoint>
+      <rightJoint>joint_main_R</rightJoint>
+      <wheelSeparation>0.6</wheelSeparation>
+      <wheelDiameter>0.225</wheelDiameter>
+      <torque>30</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
+  <xacro:realsense_T265 sensor_name="T265" parent_link="base_link" rate="30.0">
+    <origin rpy="0 0 0" xyz="0.4 0 0.3"/>
+  </xacro:realsense_T265>
+
+
+  <xacro:include filename="$(find realsense2_description)/urdf/_l515.urdf.xacro" />
+  <xacro:sensor_l515 name="L515" topics_ns="L515" parent="base_link" use_nominal_extrinsics="true" publish_pointcloud="true" add_plug="false" use_mesh="true">
+    <origin rpy="0 0 0" xyz="0.4 0 0.35"/>
+  </xacro:sensor_l515>  
+</robot>
